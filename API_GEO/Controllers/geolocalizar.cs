@@ -24,7 +24,13 @@ namespace API_GEO.Controllers
             LocalizadorData LD = SQLC.GetID(id);
             if(LD != null && LD.id > 0)
             {
-                return Ok(new string[] {"id:" + LD.id });
+                return Ok(new string[] 
+                {
+                    "id:" + LD.id, 
+                    "latitud:" + LD.latitud,
+                    "longitud:" + LD.longitud,
+                    "estado:" + LD.estado
+                });
             }
             else
             {
