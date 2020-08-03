@@ -104,8 +104,7 @@ namespace API_GEO.Librery
         public long AddNew(LocalizadorData _LocData)
         {
             _context.SetLocalizadorData(_LocData);
-            long v = _context.GetAll()[0].id;
-
+            long v = _LocData.id;
             return v;
         }
     }

@@ -46,7 +46,17 @@ namespace API_GEO.Controllers
             string val = procesarDatos(Value);
             if(val != "")
             {
-                return Accepted(new string[] {"Calle:" + val.ToString() });
+                Value.estado = "PROCESANDO";
+                SQLClient SQLC = new SQLClient(_context);
+                long _id = SQLC.AddNew(Value);
+                if(_id <= 0)
+                {
+                    return BadRequest("ERROR!");
+                }
+                else
+                {
+                    return Accepted(new string[] {"id:" + _id });
+                }
             }
             else
             {
