@@ -1,0 +1,5 @@
+{
+    "name":"Api Geo Docker",
+    "dockerFile":"Dockerfile",
+    "appPort": 5001
+}

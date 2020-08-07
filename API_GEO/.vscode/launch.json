@@ -5,7 +5,7 @@
    "version": "0.2.0",
    "configurations": 
     [
-        {
+        /*{
             "name": ".NET Core Launch (web)",
             "type": "coreclr",
             "request": "launch",
@@ -22,6 +22,16 @@
             "type": "coreclr",
             "request": "attach",
             "processId": "${command:pickProcess}"
+        }*/
+        {
+            "name": "Launch .NET Core in Docker",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "Run Docker Container",
+            "netCore": 
+            {
+              "appProject": "${workspaceFolder}/project.csproj"
+            }
         }
     ]
 }

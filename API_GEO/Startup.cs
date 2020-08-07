@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using API_GEO.Models;
 using API_GEO.Librery;
+using System.Threading;
 
 namespace API_GEO
 {
@@ -32,9 +33,9 @@ namespace API_GEO
         {
             services.AddMvc();
 
-            var hostname = Environment.GetEnvironmentVariable("SQLSERVER_HOST") ?? @"DESKTOP-1735SKC\SQLMARIANOEXANET";
-            var password = Environment.GetEnvironmentVariable("SQLSERVER_SA_PASSWORD") ?? "Ex4net!NMQ242";
-            var connString = $"Data Source={hostname};Initial Catalog=master;User ID=sa;Password={password};";
+            var hostname = Environment.GetEnvironmentVariable("SQLSERVER_HOST") ?? @"db";
+            var password = Environment.GetEnvironmentVariable("SQLSERVER_SA_PASSWORD") ?? "APIGEO";
+            var connString = $"server={hostname};Initial Catalog=master;User ID=sa;Password={password};";
 
             if(!SQLClient.CheckDatabaseExist(connString,"API_GEO_DB"))
             {
@@ -45,7 +46,7 @@ namespace API_GEO
                 connString = "";
             }
             
-            connString = $"Data Source={hostname};Initial Catalog=API_GEO_DB;User ID=sa;Password={password};";
+            connString = $"server={hostname};Initial Catalog=API_GEO_DB;User ID=sa;Password={password};";
             
             services.AddDbContext<ApiContext>(options => options.UseSqlServer(connString));
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using API_GEO.Librery;
 using API_GEO.Models;
+using System.Threading;
 
 namespace API_GEO.Controllers
 {
@@ -15,6 +16,20 @@ namespace API_GEO.Controllers
         public geolocalizar(ApiContext context)
         {
             _context = context;
+
+            Thread th = new Thread( () => 
+            {
+                RabbitMQDataRetrive();
+            });
+            th.Start();
+        }
+
+        private void RabbitMQDataRetrive()
+        {
+            while (true)
+            {
+                RabbitMQData.Recive(_context);
+            }
         }
         
         [HttpGet]
@@ -43,8 +58,7 @@ namespace API_GEO.Controllers
         public IActionResult Post([FromBody]LocalizadorData Value)
         {
             
-            string val = procesarDatos(Value);
-            if(val != "")
+            if(Value.calle != "")
             {
                 Value.estado = "PROCESANDO";
                 SQLClient SQLC = new SQLClient(_context);
@@ -55,6 +69,7 @@ namespace API_GEO.Controllers
                 }
                 else
                 {
+                    procesarDatos(Value);
                     return Accepted(new string[] {"id:" + _id });
                 }
             }
@@ -64,10 +79,13 @@ namespace API_GEO.Controllers
             }
         }
 
-        private string procesarDatos(LocalizadorData Value)
+        private void procesarDatos(LocalizadorData Value)
         {
-            //return (string)Value["calle"];
-            return Value.calle;
+            Thread th = new Thread( () => 
+            {
+                RabbitMQData.Send(Value);
+            });
+            th.Start();
         }
     }
 }

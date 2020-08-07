@@ -101,6 +101,23 @@ namespace API_GEO.Librery
             return true;
         }
 
+        public bool Update(LocalizadorData LD)
+        {
+            var LocalizadoData = _context.GetID(LD.id);
+
+            if(LocalizadoData == null)
+            {
+                return false;
+            }
+
+            LocalizadoData.latitud = LD.latitud;
+            LocalizadoData.longitud = LD.longitud;
+            LocalizadoData.estado = LD.estado;
+
+            _context.SaveChanges();
+            return true;
+        }
+
         public long AddNew(LocalizadorData _LocData)
         {
             _context.SetLocalizadorData(_LocData);

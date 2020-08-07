@@ -1,0 +1,70 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Andreani\\Andreani_ApiGeo_RESTful\\geocodificador\\geocodificador.csproj": {}
+  },
+  "projects": {
+    "C:\\Andreani\\Andreani_ApiGeo_RESTful\\geocodificador\\geocodificador.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Andreani\\Andreani_ApiGeo_RESTful\\geocodificador\\geocodificador.csproj",
+        "projectName": "geocodificador",
+        "projectPath": "C:\\Andreani\\Andreani_ApiGeo_RESTful\\geocodificador\\geocodificador.csproj",
+        "packagesPath": "C:\\Users\\Mariano\\.nuget\\packages\\",
+        "outputPath": "C:\\Andreani\\Andreani_ApiGeo_RESTful\\geocodificador\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Mariano\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Nominatim.API": {
+              "target": "Package",
+              "version": "[1.5.2, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.1.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

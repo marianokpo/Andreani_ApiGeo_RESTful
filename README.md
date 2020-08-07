@@ -1,6 +1,6 @@
 # Andreani_ApiGeo_RESTful
 
-Estas API desarrolladas en .NET Core 3.1 utilizando SQL Server.
+Estas API desarrolladas en .NET Core 3.1 utilizando SQL Server, ademas utiliza OpenStrepMap y RabbitMQ.
 
 ## Estado
 
@@ -17,13 +17,11 @@ POST http://*:5001/geocodificar {calle: “”,numero: “”,ciudad: “”,có
 
 Donde se envia un JSon a travez de POST para almacenar la informacion y solicitar la ubicacion a la otra api con OpenStreetMap.
 
-## Que falta implementar
+- Bróker de mensajería RabbitMQ
 
-- Bróker de mensajería
+- Api con OpenStreetMap
 
-- Segunda Api con OpenStreetMap
-
-- Docker
+- Docker (2 container, una para cada App)
 
 ## Contribuciones
 
