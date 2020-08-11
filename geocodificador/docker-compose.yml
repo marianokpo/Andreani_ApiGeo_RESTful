@@ -6,19 +6,33 @@ services:
             context: .
             dockerfile: Dockerfile
         image: apigeo-geocodificador
-        ports:
-            - 5672:5672
-        restart: on-failure 
-        command: /bin/sh -c "while sleep 1000; do :; done"       
+        restart: on-failure    
         depends_on:
             - rabbitmq
+        networks:
+            - docker-network
+        
     rabbitmq: # login guest:guest
-        image: rabbitmq:3.7-management
+        image: rabbitmq:3-management
         container_name: rabbitmq
         hostname: rabbitmq
-        environment:
-            - RABBITMQ_DEFAULT_USER=Andreani
-            - RABBITMQ_DEFAULT_PASS=GeoApi
+        labels:
+            NAME: "rabbitmq"
         ports:
+            - "15672:15672"
             - "5672:5672"
+        expose:
+            - "5672"
+        restart: unless-stopped
+        environment:
+            RABBITMQ_DEFAULT_USER: "Andreani"
+            RABBITMQ_DEFAULT_PASS: "GeoApi"
+            RABBITMQ_DEFAULT_VHOST: "/"
+        networks:
+            - docker-network
+
+networks:
+    docker-network:
+        driver: bridge
+        
     

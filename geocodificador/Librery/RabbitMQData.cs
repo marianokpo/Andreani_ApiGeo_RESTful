@@ -25,7 +25,6 @@ namespace Geocodificador.Librery
             { 
                 UserName = User,
                 Password = Pass,
-                VirtualHost = Virtualhost,
                 HostName = Hostname,
                 Port = Port
             };
