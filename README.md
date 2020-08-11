@@ -2,6 +2,16 @@
 
 Estas API desarrolladas en .NET Core 3.1 utilizando SQL Server, ademas utiliza OpenStrepMap y RabbitMQ.
 
+## Uso
+
+```sh
+./API_GEO/docker-compose build
+./API_GEO/docker-compose up
+
+./geocodificador/docker-compose build
+./geocodificador/docker-compose up
+```
+
 ## Estado
 
 En Desarrollo
