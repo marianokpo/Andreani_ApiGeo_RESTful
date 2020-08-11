@@ -35,16 +35,17 @@ namespace API_GEO
 
             var hostname = Environment.GetEnvironmentVariable("SQLSERVER_HOST") ?? @"db";
             var password = Environment.GetEnvironmentVariable("SQLSERVER_SA_PASSWORD") ?? "APIGEO2020#";
-            var connString = $"server={hostname};Initial Catalog=master;User ID=sa;Password={password};";
+            var connString = "";
+            //var connString = $"server={hostname};Initial Catalog=master;User ID=sa;Password={password};";
 
-            if(!SQLClient.CheckDatabaseExist(connString,"API_GEO_DB"))
-            {
-                SQLClient.CreateDataBase(connString);
-            }
-            else
-            {
-                connString = "";
-            }
+            //if(!SQLClient.CheckDatabaseExist(connString,"API_GEO_DB"))
+            //{
+            //    SQLClient.CreateDataBase(connString);
+            //}
+            //else
+            //{
+            //    connString = "";
+            //}
             
             connString = $"server={hostname};Initial Catalog=API_GEO_DB;User ID=sa;Password={password};";
             
