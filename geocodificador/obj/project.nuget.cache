@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fRALFLQWgVy8gUDj0D44sxrfiRAKt0ISlOB6kewk2o1TXF2Yesq/HKHsYlaEgsgAN/noUlklLEDka4sgs7CA+w==",
+  "dgSpecHash": "Um4y9PIE/hGTfkVxnwss6iHaOs6MaPWRZEArI3CVMc/MW5xhJocPJKrjkkEUklVqFBigU6MryxrDO7aNtnaMCQ==",
   "success": true,
-  "projectFilePath": "C:\\Andreani\\Andreani_ApiGeo_RESTful\\geocodificador\\geocodificador.csproj",
+  "projectFilePath": "C:\\Compartido\\Andreani_ApiGeo_RESTful\\geocodificador\\Geocodificador.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Mariano\\.nuget\\packages\\geojson.net\\1.1.64\\geojson.net.1.1.64.nupkg.sha512",
     "C:\\Users\\Mariano\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.0.1\\microsoft.aspnetcore.webutilities.2.0.1.nupkg.sha512",

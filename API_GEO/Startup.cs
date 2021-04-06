@@ -20,6 +20,7 @@ namespace API_GEO
 {
     public class Startup
     {
+        public static string ConnecStringSQL = "";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,21 +34,16 @@ namespace API_GEO
         {
             services.AddMvc();
 
-            var hostname = Environment.GetEnvironmentVariable("SQLSERVER_HOST") ?? @"db";
-            var password = Environment.GetEnvironmentVariable("SQLSERVER_SA_PASSWORD") ?? "APIGEO2020#";
+            var hostname = Environment.GetEnvironmentVariable("SQLSERVER_HOST") ?? @"localhost\\SQLEXPRESS";
+            var user = Environment.GetEnvironmentVariable("SQLSERVER_USER") ?? "sa";
+            var password = Environment.GetEnvironmentVariable("SQLSERVER_PASSWORD") ?? "damian";
             var connString = "";
-            //var connString = $"server={hostname};Initial Catalog=master;User ID=sa;Password={password};";
-
-            //if(!SQLClient.CheckDatabaseExist(connString,"API_GEO_DB"))
-            //{
-            //    SQLClient.CreateDataBase(connString);
-            //}
-            //else
-            //{
-            //    connString = "";
-            //}
             
-            connString = $"server={hostname};Initial Catalog=API_GEO_DB;User ID=sa;Password={password};";
+            connString = $"server={hostname};Initial Catalog=API_GEO_DB;User ID={user};Password={password};";
+
+            System.Diagnostics.Debug.Write("connString: " + connString);
+
+            ConnecStringSQL = connString;
             
             services.AddDbContext<ApiContext>(options => options.UseSqlServer(connString));
 

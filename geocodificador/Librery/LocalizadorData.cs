@@ -1,5 +1,8 @@
 namespace Geocodificador.Librery
 {
+    /// <summary>
+    /// Esta clase tiene contiene informacion necesaria para ser procesada y enviada.
+    /// </summary>
     public class LocalizadorData
     {
         public long id{ get; set; }

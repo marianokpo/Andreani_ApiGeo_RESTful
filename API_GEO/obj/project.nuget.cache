@@ -1,11 +1,9 @@
 {
   "version": 2,
-  "dgSpecHash": "aWpHg4PgZVW4JRzUYUGaycPt0JCUdMUWGiax5vDnf4G6/Wja98nHgw1FSRvupiarne2KhJ/NiQJExEroreR/tA==",
+  "dgSpecHash": "dGFCPxPvnY0uLgVb7/uHp161k5hUDCIOs08l8j4KLwQImTlrwidLfiU2DagYkJYNwK/4mdPCXLcyiajcyIeb+Q==",
   "success": true,
-  "projectFilePath": "c:\\Andreani\\Andreani_ApiGeo_RESTful\\API_GEO\\API_GEO.csproj",
+  "projectFilePath": "C:\\Compartido\\Andreani_ApiGeo_RESTful\\API_GEO\\API_GEO.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Mariano\\.nuget\\packages\\confluent.kafka\\1.5.0\\confluent.kafka.1.5.0.nupkg.sha512",
-    "C:\\Users\\Mariano\\.nuget\\packages\\librdkafka.redist\\1.5.0\\librdkafka.redist.1.5.0.nupkg.sha512",
     "C:\\Users\\Mariano\\.nuget\\packages\\microsoft.aspnetcore\\2.2.0\\microsoft.aspnetcore.2.2.0.nupkg.sha512",
     "C:\\Users\\Mariano\\.nuget\\packages\\microsoft.aspnetcore.antiforgery\\2.2.0\\microsoft.aspnetcore.antiforgery.2.2.0.nupkg.sha512",
     "C:\\Users\\Mariano\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

@@ -7,6 +7,9 @@ using Microsoft.Data.SqlClient;
 
 namespace API_GEO.Librery
 {
+    /// <summary>
+    /// Clase definida para realizar todos lo necesario en la base de datos. ABM
+    /// </summary>
     public class SQLClient
     {
         private readonly ApiContext _context;
@@ -16,6 +19,12 @@ namespace API_GEO.Librery
             _context = context;
         }
 
+        /// <summary>
+        /// Verifica si la base de datos existe.
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <param name="databaseName"></param>
+        /// <returns>true/false</returns>
         public static bool CheckDatabaseExist(string connectionString, string databaseName)
         {
             try
@@ -37,6 +46,11 @@ namespace API_GEO.Librery
             }
         }
 
+        /// <summary>
+        /// Crea la base de datos.
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         public static bool CreateDataBase(string connectionString)
         {
             string root = @"C:\DB";        
@@ -73,6 +87,48 @@ namespace API_GEO.Librery
             return true;
         }
 
+        /// <summary>
+        /// Actualiza los parametros latitud, longitud y estado del id correspondiente.
+        /// </summary>
+        /// <param name="_id"></param>
+        /// <param name="_latitud"></param>
+        /// <param name="_longitud"></param>
+        /// <param name="_estado"></param>
+        public static void UpdateLanLon(long _id, double _latitud, double _longitud, string _estado)
+        {
+            SqlConnection Connection = new SqlConnection(Startup.ConnecStringSQL);;
+            SqlCommand command;
+            try
+            {                
+                SqlDataAdapter adapter = new SqlDataAdapter(); 
+                
+                Connection.Open();
+
+                string sqlq = "update LocalizadorData set latitud=" + _latitud + ", longitud=" + _longitud +
+                ", estado='" + _estado + "' where id="+_id;
+
+                command = new SqlCommand(sqlq,Connection);
+		
+                adapter.InsertCommand = new SqlCommand(sqlq,Connection); 
+                adapter.InsertCommand.ExecuteNonQuery();
+
+                command.Dispose();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                Connection.Close();
+            }
+        }
+
+        /// <summary>
+        /// Obtiene el objeto LocalizadorData desde el id
+        /// </summary>
+        /// <param name="_id"></param>
+        /// <returns>new LocalizadorData</returns>
         public LocalizadorData GetID(long _id)
         {
             var LocalizadoData = _context.GetID(_id);
@@ -84,7 +140,15 @@ namespace API_GEO.Librery
             return LocalizadoData;
         }
 
-        public bool Update(long _id, float _latitud, float _longitud, string _estado)
+        /// <summary>
+        /// otra forma de actualizar la base de datos con los nuevos datos de latitud, longitud y estado.
+        /// </summary>
+        /// <param name="_id"></param>
+        /// <param name="_latitud"></param>
+        /// <param name="_longitud"></param>
+        /// <param name="_estado"></param>
+        /// <returns></returns>
+        public bool Update(long _id, double _latitud, double _longitud, string _estado)
         {
             var LocalizadoData = _context.GetID(_id);
 
@@ -101,6 +165,11 @@ namespace API_GEO.Librery
             return true;
         }
 
+        /// <summary>
+        /// Actualiza un objeto en la base de datos.
+        /// </summary>
+        /// <param name="LD"></param>
+        /// <returns></returns>
         public bool Update(LocalizadorData LD)
         {
             var LocalizadoData = _context.GetID(LD.id);
@@ -118,6 +187,11 @@ namespace API_GEO.Librery
             return true;
         }
 
+        /// <summary>
+        /// Agrega un nuevo objeto a la base de datos.
+        /// </summary>
+        /// <param name="_LocData"></param>
+        /// <returns></returns>
         public long AddNew(LocalizadorData _LocData)
         {
             _context.SetLocalizadorData(_LocData);

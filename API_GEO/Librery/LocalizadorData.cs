@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API_GEO.Librery
 {
+    /// <summary>
+    /// Clase de objeto LocalizadorData en la Dabe de datos.
+    /// </summary>
     public class LocalizadorData
     {
         [Required]

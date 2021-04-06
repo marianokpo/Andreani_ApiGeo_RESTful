@@ -7,16 +7,24 @@ using RabbitMQ.Client.Events;
 
 namespace API_GEO.Librery
 {
+    /// <summary>
+    /// clase de comunicacion con el servicio RabbitMQ
+    /// </summary>
     class RabbitMQData
     {
         private static readonly string sendTopic = "Geocodificador";
         private static readonly string topic = "APIGEO";
         private static readonly string User = "Andreani";
         private static readonly string Pass = "GeoApi";
-        private static readonly string Hostname = "rabbitmq";
+        private static readonly string Hostname = "localhost";
         private static readonly string Virtualhost = "/";
         private static readonly int Port = 5672;
-        public static async void Send(LocalizadorData DataLD)
+
+        /// <summary>
+        /// Se utiliza para enviar informacion entre las api con el servicio RabbitMQ
+        /// </summary>
+        /// <param name="DataLD"></param>
+        public static void Send(LocalizadorData DataLD)
         {
             string message = "id:" +DataLD.id.ToString() + ";calle:"+ DataLD.calle 
             +":numero:" + DataLD.numero.ToString() + ";ciudad:" + DataLD.ciudad
@@ -35,26 +43,33 @@ namespace API_GEO.Librery
             {
                 using (var channel = connection.CreateModel())
                 {
-                    channel.QueueDeclare(queue: sendTopic,
-                                 durable: false,
+                     channel.QueueDeclare(queue: sendTopic,
+                                 durable: true,
                                  exclusive: false,
                                  autoDelete: false,
                                  arguments: null);
 
-                    //string message = "Hello World!";
                     var body = Encoding.UTF8.GetBytes(message);
+
+                    var properties = channel.CreateBasicProperties();
+                    properties.Persistent = true;
 
                     channel.BasicPublish(exchange: "",
                                         routingKey: sendTopic,
-                                        basicProperties: null,
+                                        basicProperties: properties,
                                         body: body);
                     Console.WriteLine(" [x] Sent {0}", message);
                 }
             }
         }
-
-        public static void Recive(ApiContext _context)
+        /// <summary>
+        /// Se utiliza para escuchar y recivir los mensajes de RabbitMQ.
+        /// </summary>
+        /// <param name="_context"></param>
+        /// <returns>messaje</returns>
+        public static string Recive(ApiContext _context)
         {
+            Console.WriteLine("Received to {0}", topic);
             try
             {
                 string message = null;
@@ -72,68 +87,36 @@ namespace API_GEO.Librery
                 {
                     using(var channel = connection.CreateModel())
                     {
-                        channel.QueueDeclare(queue: topic,
-                                            durable: false,
-                                            exclusive: false,
-                                            autoDelete: false,
-                                            arguments: null);
-
-                        var consumer = new EventingBasicConsumer(channel);
-                        consumer.Received += (model, ea) =>
+                        while(channel.IsOpen && message == null)
                         {
-                            var body = ea.Body.ToArray();
-                            message = Encoding.UTF8.GetString(body);
-                            Console.WriteLine(" [x] Received {0}", message);
-                            Task t = new Task(() => 
+                            channel.QueueDeclare(queue: topic,
+                                                durable: true,
+                                                exclusive: false,
+                                                autoDelete: false,
+                                                arguments: null);
+                            
+                            channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
+                            
+                            var consumer = new EventingBasicConsumer(channel);
+                            consumer.Received += (model, ea) =>
                             {
-                                ProcessInfo(message,_context);
-                            });
-                            t.Start();
-                        };
-                        channel.BasicConsume(queue: topic,
-                                            autoAck: true,
-                                            consumer: consumer);
+                                var body = ea.Body.ToArray();
+                                message = Encoding.UTF8.GetString(body);
+                                Console.WriteLine(" [x] Received {0}", message);
+                            };
+                            channel.BasicConsume(queue: topic,
+                                                autoAck: true,
+                                                consumer: consumer);
+                        }
                     }
                 }
-
+                return message;
                 
             }
             catch(Exception e)
             {
                 Console.WriteLine("Error RabbitMQ: " + e.Message);
-            }
-        }
-
-        private static void ProcessInfo(string message, ApiContext _context)
-        {
-            LocalizadorData LD = new LocalizadorData();
-
-            foreach(string v in message.Split(";"))
-            {
-                string[] vr = v.Split(":");
-                switch(vr[0].ToLower())
-                {
-                    case "id":
-                        LD.id = Convert.ToInt64(vr[1]);
-                        break;
-                    case "LAT":
-                        LD.latitud = Convert.ToDouble(vr[1]);
-                        break;
-                    case "LON":
-                        LD.longitud = Convert.ToDouble(vr[1]);
-                        break;
-                    default:
-                        break;
-                };
-            }
-
-            if(LD != null)
-            {
-                SQLClient SQLC = new SQLClient(_context);
-                LocalizadorData lld = SQLC.GetID(LD.id);
-                lld.latitud = LD.latitud;
-                lld.longitud = LD.longitud;
-                lld.estado = "TERMINADO";
+                return "";
             }
         }
     }

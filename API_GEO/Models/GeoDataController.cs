@@ -5,12 +5,22 @@ using System.Collections.Generic;
 
 namespace API_GEO.Models
 {
+
+    /// <summary>
+    /// Clase de dbcontext para el procesado de la informacion en la base de datos.
+    /// </summary>
     public class ApiContext : DbContext
     {
         
         public ApiContext(DbContextOptions<ApiContext> options) : base(options)
         {
             this.Database.EnsureCreated();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder
+                .UseSqlServer(Startup.ConnecStringSQL);
         }
 
         public DbSet<LocalizadorData> LocalizadorData { get; set; }
